@@ -41,7 +41,6 @@ describe("Github page tests", () => {
   });
 
   test("Should open Pricing title", async () => {
-    await page.goto("https://github.com/");
     const pricingLink = "nav > ul > li > a";
     await page.waitForSelector(pricingLink);
     await page.click(pricingLink);
@@ -51,7 +50,6 @@ describe("Github page tests", () => {
   }, 10000);
 
   test("Should open 'Sign in to GitHub' title", async () => {
-    await page.goto("https://github.com/");
     const loginLink = 'a[href="/login"]';
     await page.waitForSelector(loginLink);
     await page.click(loginLink);
@@ -59,12 +57,13 @@ describe("Github page tests", () => {
     const loginTitle = await page.title();
     expect(loginTitle).toContain("Sign in to GitHub");
   }, 10000);
-
-  test("Should open 'Join GitHub' title", async () => {
-    await page.goto(
-      "https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home"
-    );
-    const signupTitle = await page.title();
-    expect(signupTitle).toContain("Join GitHub");
-  }, 6000);
 });
+
+test("Should open 'Join GitHub' title", async () => {
+  page = await browser.newPage();
+  await page.goto(
+    "https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home"
+  );
+  const signupTitle = await page.title();
+  expect(signupTitle).toContain("Join GitHub");
+}, 10000);
